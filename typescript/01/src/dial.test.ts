@@ -6,7 +6,7 @@ describe('Dial', () => {
   });
 
   test("turn the dial", () => {
-    dial = new Dial();
+    const dial = new Dial();
 
     dial.turn("L", 5);
     expect(dial.position).toBe(45);
@@ -16,12 +16,18 @@ describe('Dial', () => {
   });
 
   test("turn the dial past 0/99", () => {
-    dial = new Dial();
+    const dial = new Dial();
 
     dial.turn("L", 51);
     expect(dial.position).toBe(99);
 
     dial.turn("R", 2);
     expect(dial.position).toBe(1);
+  });
+
+  test("edge case: high number", () => {
+    const dial = new Dial();
+    dial.turn("L", 876);
+    expect(dial.position).toBe(74);
   });
 })

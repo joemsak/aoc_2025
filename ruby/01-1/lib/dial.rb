@@ -12,25 +12,27 @@ class Dial
 
   def turn(dir, count)
     dir = String(dir).downcase
-    count = Integer(count)
 
     unless ACCEPTED_DIRS.include?(dir)
       raise "unknown direction `#{dir}`, must be one of #{ACCEPTED_DIRS}"
     end
 
-    if dir == "l"
-      if pointing_at + count >= LIMIT
-        @pointing_at = @pointing_at + count - LIMIT
-      else
-        @pointing_at += count
-      end
-    end
+    count = Integer(count)
+    count -= LIMIT until count < LIMIT
 
-    if dir == "r"
+    if dir == "l"
       if (pointing_at - count).negative?
         @pointing_at = @pointing_at - count + LIMIT
       else
         @pointing_at -= count
+      end
+    end
+
+    if dir == "r"
+      if (pointing_at + count) >= LIMIT
+        @pointing_at = @pointing_at + count - LIMIT
+      else
+        @pointing_at += count
       end
     end
   end

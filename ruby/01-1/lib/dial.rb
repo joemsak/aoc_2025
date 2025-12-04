@@ -4,35 +4,36 @@ class Dial
   DIR_LEFT = "L"
   DIR_RIGHT = "R"
   ACCEPTED_DIRS = [DIR_LEFT, DIR_RIGHT].freeze
-  DIR_PATTERN = Regexp.new("\\A\\s*(?:#{ACCEPTED_DIRS.join("|")})\\s*", Regexp::IGNORECASE).freeze
+  DIR_PATTERN = /\A\s*(L|R)\s*/i
   LIMIT = 100
 
   attr_reader :pointing_at
 
   def initialize
-    @pointing_at = 50
+    @pointing_at = LIMIT / 2
   end
 
   def turn(dir, count)
-    dir = String(dir).upcase
+    dir = normalize_dir(dir)
+    count = normalize_count(count)
 
-    unless dir.match?(DIR_PATTERN)
-      raise "unknown direction `#{dir}`, must be one of #{ACCEPTED_DIRS}"
-    end
+    @pointing_at = wrap(@pointing_at + ((dir == DIR_LEFT) ? -count : count))
+  end
 
-    count = Integer(count)
-    count -= LIMIT until count < LIMIT
+  private
 
-    if dir == DIR_LEFT
-      @pointing_at -= count
-    else
-      @pointing_at += count
-    end
+  def normalize_dir(dir)
+    dir = dir.to_s.upcase.strip
+    raise "unknown direction `#{dir}`, must be one of #{ACCEPTED_DIRS}" unless ACCEPTED_DIRS.include?(dir)
+    dir
+  end
 
-    if pointing_at >= LIMIT
-      @pointing_at -= LIMIT
-    elsif pointing_at.negative?
-      @pointing_at += LIMIT
-    end
+  def normalize_count(count)
+    Integer(count) % LIMIT
+  end
+
+  def wrap(pos)
+    pos %= LIMIT
+    pos
   end
 end

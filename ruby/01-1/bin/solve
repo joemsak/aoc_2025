@@ -2,19 +2,10 @@
 
 $LOAD_PATH.unshift File.expand_path('../lib', __dir__)
 
-require "instruction_parser"
-require "dial"
+require "solver"
 
 file = File.open("input.txt")
-parser = InstructionParser.new(file.read)
-dial = Dial.new
-count = 0
+solver = Solver.new(file.read)
 
-
-parser.instructions.each do |instruction|
-  dial.turn(*instruction)
-  count += 1 if dial.pointing_at.zero?
-end
-
-puts count
+puts solver.solve
 

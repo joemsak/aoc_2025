@@ -9,7 +9,7 @@ RSpec.describe Dial do
     expect(dial.position).to eq(50)
   end
 
-  specify "turning the dial" do
+  specify "turn the dial" do
     dial = described_class.new
 
     dial.turn(:l, 5)

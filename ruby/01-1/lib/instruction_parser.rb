@@ -3,6 +3,8 @@
 require_relative "direction"
 
 class InstructionParser
+  include Direction
+
   LIST_SPLIT_PATTERN = /[\n,]\s*/
   COUNT_PATTERN = /\d+/
 
@@ -17,7 +19,7 @@ class InstructionParser
 
   def parse_instructions
     list.split(LIST_SPLIT_PATTERN).filter_map do |instruction|
-      dir = instruction[Direction::DIR_PATTERN, 1]
+      dir = instruction[DIR_PATTERN, 1]
       count = instruction[COUNT_PATTERN]
       [dir, count] if dir && count
     end

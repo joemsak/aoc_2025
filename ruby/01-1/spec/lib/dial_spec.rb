@@ -42,7 +42,7 @@ RSpec.describe Dial do
     expect(dial.position).to eq(74)
   end
 
-  specify "turning the dial with invalid input" do
+  specify "edge case: invalid input" do
     dial = described_class.new
 
     expect {

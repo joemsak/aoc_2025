@@ -1,6 +1,6 @@
 import {parseInstructions, Instruction} from './instructionParser';
 
-describe('instructionParser module', () => {
+describe('instructionParser', () => {
   test('read a single instruction', () => {
     expected = [new Instruction("L", "32")]
     result = parseInstructions("L32")

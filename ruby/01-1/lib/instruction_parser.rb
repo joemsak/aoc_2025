@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "dial"
+require_relative "direction"
 
 class InstructionParser
   LIST_SPLIT_PATTERN = /[\n,]\s*/
@@ -17,7 +17,7 @@ class InstructionParser
 
   def parse_instructions
     list.split(LIST_SPLIT_PATTERN).filter_map do |instruction|
-      dir = instruction[Dial::DIR_PATTERN, 1]
+      dir = instruction[Direction::DIR_PATTERN, 1]
       count = instruction[COUNT_PATTERN]
       [dir, count] if dir && count
     end

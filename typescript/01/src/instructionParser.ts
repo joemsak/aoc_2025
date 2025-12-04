@@ -9,9 +9,9 @@ export class Instruction {
 }
 
 export function parseInstructions(list: string): Instruction[] {
-  dir = list.split("")[0];
-  count = list.substring(1);
-	instruction = new Instruction(dir, count);
-
-  return [instruction];
+  return list.split(/[\n,]\s*/).map(entry => {
+    dir = entry.split("")[0];
+    count = entry.substring(1);
+    return new Instruction(dir, count);
+  });
 }

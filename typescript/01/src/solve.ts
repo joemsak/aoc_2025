@@ -1,12 +1,16 @@
+import {readFileSync} from 'fs';
 import Dial from "./dial";
 import {parseInstructions} from "./instructionParser";
 
 const dial = new Dial();
-const instructions = "L5,R10,L3";
+const instructions = readFileSync('input.txt', 'utf8');
 const parsedInstructions = parseInstructions(instructions);
+
+let counter = 0;
 
 for (const { dir, count } of parsedInstructions) {
   dial.turn(dir, count);
+  if (dial.position === 0) counter++
 }
 
-console.log("Final position:", dial.position);
+console.log("Landed on 0:", counter);

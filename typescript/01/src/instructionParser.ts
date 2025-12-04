@@ -1,10 +1,10 @@
 export class Instruction {
   public dir: string;
-	public count: string;
+	public count: number;
 
   constructor(dir: string, count: string) {
     this.dir = dir;
-    this.count = count;
+    this.count = parseInt(count);
   }
 }
 

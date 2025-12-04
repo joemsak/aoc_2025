@@ -5,17 +5,18 @@ require_relative "direction"
 class Dial
   LIMIT = 100
 
-  attr_reader :pointing_at
+  attr_reader :position
 
   def initialize
-    @pointing_at = LIMIT / 2
+    @position = LIMIT / 2
   end
 
   def turn(dir, count)
     dir = normalize_dir(dir)
     count = normalize_count(count)
+    delta = (dir == Direction::DIR_LEFT) ? -count : count
 
-    @pointing_at = wrap(@pointing_at + ((dir == Direction::DIR_LEFT) ? -count : count))
+    @position = wrap(position + delta)
   end
 
   private

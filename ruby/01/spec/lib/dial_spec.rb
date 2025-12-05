@@ -32,6 +32,33 @@ RSpec.describe Dial do
     expect(dial.position).to eq(99)
   end
 
+  specify "keep count of landing on 0" do
+    dial = described_class.new
+
+    dial.turn(:l, 50) # 0
+    expect(dial.zero_landings).to eq(1)
+
+    dial.turn(:r, 1) # 1
+    dial.turn(:l, 2) # 99
+    dial.turn(:r, 1) # 0
+    expect(dial.zero_landings).to eq(2)
+  end
+
+  specify "keep count of passing 0" do
+    dial = described_class.new
+
+    dial.turn(:l, 51) # 99
+    expect(dial.zero_passes).to eq(1)
+
+    dial.turn(:r, 1) # 0
+    dial.turn(:r, 1) # 1
+    dial.turn(:l, 2) # 99
+    expect(dial.zero_passes).to eq(2)
+
+    dial.turn(:l, 200) # 99 twice
+    expect(dial.zero_passes).to eq(4)
+  end
+
   specify "edge case: high number" do
     dial = described_class.new
 

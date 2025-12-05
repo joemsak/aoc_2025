@@ -2,21 +2,19 @@ require "instruction_parser"
 require "dial"
 
 class Solver
-  attr_reader :input, :parser, :dial, :counter
+  attr_reader :input, :parser, :dial
 
   def initialize(input)
     @input = input
     @parser = InstructionParser.new(@input)
     @dial = Dial.new
-    @counter = 0
   end
 
   def solve
     parser.instructions.each do |instruction|
       dial.turn(*instruction)
-      @counter += 1 if dial.position.zero?
     end
 
-    counter
+    dial.zero_passes + dial.zero_landings
   end
 end

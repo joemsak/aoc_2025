@@ -57,6 +57,22 @@ RSpec.describe Dial do
 
     dial.turn(:l, 200) # 99 twice
     expect(dial.zero_passes).to eq(4)
+
+    dial.turn(:r, 1_000) # 99 ten times
+    expect(dial.zero_passes).to eq(14)
+  end
+
+  specify "turning after landing on 0 doesn't double count as a pass" do
+    dial = described_class.new
+
+    dial.turn(:l, 50) # 0
+    dial.turn(:r, 1) # 1
+    expect(dial.zero_landings).to eq(1)
+    expect(dial.zero_passes).to eq(0)
+
+    dial.turn(:l, 2) # 99
+    expect(dial.zero_landings).to eq(1)
+    expect(dial.zero_passes).to eq(1)
   end
 
   specify "edge case: high number" do

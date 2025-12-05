@@ -10,9 +10,10 @@ export default class Dial {
       this.position += delta;
       if (this.position === -1) this.position = 99;
       if (this.position === 100) this.position = 0;
-      if (clicks > 0 && this.position === 0) this.zeroPasses++;
 
       clicks--;
+
+      if (clicks > 0 && this.position === 0) this.zeroPasses++;
     };
 
     if (this.position === 0) this.zeroLandings++;

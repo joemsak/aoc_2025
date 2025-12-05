@@ -6,11 +6,8 @@ const dial = new Dial();
 const instructions = readFileSync('input.txt', 'utf8');
 const parsedInstructions = parseInstructions(instructions);
 
-let counter = 0;
-
-for (const { dir, count } of parsedInstructions) {
-  dial.turn(dir, count);
-  if (dial.position === 0) counter++
+for (const { rotation, clicks } of parsedInstructions) {
+  dial.turn(rotation, clicks);
 }
 
-console.log("Landed on 0:", counter);
+console.log(dial.zeroPasses + dial.zeroLandings);

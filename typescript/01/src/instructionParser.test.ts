@@ -6,7 +6,7 @@ describe('instructionParser', () => {
     result = parseInstructions("L32")
 
     expect(result).toEqual(expected)
-    expect(result[0].count).toBe(32)
+    expect(result[0].clicks).toBe(32)
   });
 
   test('read multiple instructions', () => {

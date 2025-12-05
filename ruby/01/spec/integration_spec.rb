@@ -10,7 +10,7 @@ RSpec.describe "integration" do
     instructions = "L68\nL30\nR48\nL5\nR60\nL55\nL1\nL99\nR14\nL82"
 
     InstructionParser.new(instructions).instructions.each do |instruction|
-      dial.turn(*instruction)
+      dial.turn(instruction.rotation, instruction.clicks)
     end
 
     expect(dial.position).to eq(32)

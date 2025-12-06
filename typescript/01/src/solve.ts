@@ -3,15 +3,17 @@ import Dial from "./dial";
 import {parseInstructions} from "./instructionParser";
 
 const dial = new Dial();
-const instructions = readFileSync('input.txt', 'utf8');
-const parsedInstructions = parseInstructions(instructions);
+const input = readFileSync('input.txt', 'utf8');
+const instructions = parseInstructions(input);
 
 let zeroPasses = 0;
 let zeroLandings = 0;
 
-for (let { rotation, clicks } of parsedInstructions) {
+for (const instruction of instructions) {
+  let clicks = instruction.clicks;
+
   while(clicks > 0) {
-    dial.step(rotation)
+    dial.step(instruction.rotation)
     clicks--;
     if (clicks > 0 && dial.position === 0) zeroPasses++;
   };

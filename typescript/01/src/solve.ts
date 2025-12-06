@@ -21,5 +21,4 @@ for (const instruction of instructions) {
   if (dial.position === 0) zeroLandings++;
 }
 
-
 console.log(zeroPasses + zeroLandings);

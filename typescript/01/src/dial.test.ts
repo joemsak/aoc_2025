@@ -8,26 +8,22 @@ describe('Dial', () => {
   test("turn the dial", () => {
     const dial = new Dial();
 
-    dial.turn("L", 5);
-    expect(dial.position).toBe(45);
+    dial.step("L")
+    expect(dial.position).toBe(49);
 
-    dial.turn("R", 10);
-    expect(dial.position).toBe(55);
+    dial.step("R")
+    expect(dial.position).toBe(50);
   });
 
   test("turn the dial past 0/99", () => {
     const dial = new Dial();
 
-    dial.turn("L", 51);
+    for(let i = 51; i > 0; i--) {
+      dial.step("L")
+    }
     expect(dial.position).toBe(99);
 
-    dial.turn("R", 2);
-    expect(dial.position).toBe(1);
-  });
-
-  test("edge case: high number", () => {
-    const dial = new Dial();
-    dial.turn("L", 876);
-    expect(dial.position).toBe(74);
+    dial.step("R")
+    expect(dial.position).toBe(0);
   });
 })

@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+
+require_relative "../lib/invalid_id_finder"
+
+input = File.read("input.txt")
+finder = InvalidIdFinder.new(input)
+
+puts finder.invalid_ids.sum

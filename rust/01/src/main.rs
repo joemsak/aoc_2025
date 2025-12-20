@@ -15,15 +15,13 @@ fn main() {
 fn parse_instructions(list: &str) -> Vec<Instruction> {
     list.lines()
         .filter_map(|line| {
-            if let (Some(rot), Some(clicks)) = (line.chars().next(), line.get(1..)) {
-                if let Ok(clicks_num) = clicks.parse::<u32>() {
-                    return Some(Instruction {
-                        rotation: rot.to_string(),
-                        clicks: clicks_num,
-                    });
-                }
-            }
-            None
+            let mut chars = line.chars();
+            let rot = chars.next()?;
+            let clicks_num: u32 = chars.as_str().parse().ok()?;
+            Some(Instruction {
+                rotation: rot.to_string(),
+                clicks: clicks_num,
+            })
         })
         .collect()
 }

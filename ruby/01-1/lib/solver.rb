@@ -14,7 +14,7 @@ class Solver
   def solve
     parser.instructions.each do |instruction|
       dial.turn(*instruction)
-      @counter += 1 if dial.pointing_at.zero?
+      @counter += 1 if dial.position.zero?
     end
 
     counter

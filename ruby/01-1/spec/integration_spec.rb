@@ -13,6 +13,6 @@ RSpec.describe "integration" do
       dial.turn(*instruction)
     end
 
-    expect(dial.pointing_at).to eq(32)
+    expect(dial.position).to eq(32)
   end
 end

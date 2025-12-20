@@ -16,9 +16,9 @@ class Dial
   def turn(dir, count)
     dir = normalize_dir(dir)
     count = normalize_count(count)
-    delta = (dir == DIR_LEFT) ? -count : count
+    delta = get_delta(dir, count)
 
-    @position = wrap(position + delta)
+    @position = wrap(delta)
   end
 
   private
@@ -37,8 +37,11 @@ class Dial
     Integer(count) % LIMIT
   end
 
-  def wrap(pos)
-    pos %= LIMIT
-    pos
+  def get_delta(dir, count)
+    (dir == DIR_LEFT) ? -count : count
+  end
+
+  def wrap(delta)
+    (position + delta) % LIMIT
   end
 end

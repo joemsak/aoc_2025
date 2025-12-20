@@ -1,18 +1,22 @@
 export default class Dial {
-  private static readonly LIMIT = 100;
-
   position = 50;
+  zeroPasses = 0;
+  zeroLandings = 0;
 
-  turn(dir: string, count: number) {
-    const limitedCount = count % Dial.LIMIT;
-    const delta = (dir === "L") ? -limitedCount : limitedCount;
+  turn(rotation: string, clicks: number) {
+    const delta = rotation === "L" ? -1 : 1
 
-    // remainder -> modulo in JS:
-    //   - ((n % d) + d) % d
-    const n = this.position + delta; // dividend
-    const d = Dial.LIMIT;            // divisor
-    const result = ((n % d) + d) % d
+    loop {
+      this.position += delta;
+      if (this.position === -1) this.position = 99;
+      if (this.position === 100) this.position = 0;
 
-    this.position = result;
-  }
-}
+      clicks--;
+      break if clicks === 0;
+
+      if (this.position === 0) this.zeroPasses++;
+    };
+
+    if (this.position === 0) this.zeroLandings++;
+  };
+};

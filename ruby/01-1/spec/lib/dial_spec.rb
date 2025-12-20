@@ -19,7 +19,7 @@ RSpec.describe Dial do
     expect(dial.position).to eq(55)
   end
 
-  specify "turning the dial around 0/99" do
+  specify "wrap around 0/99" do
     dial = described_class.new
 
     dial.turn(:l, 55)

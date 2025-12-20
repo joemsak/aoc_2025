@@ -1,17 +1,18 @@
 export class Instruction {
   public rotation: string;
-	public count: number;
+	public clicks: number;
 
-  constructor(rotation: string, count: string) {
+  constructor(rotation: string, clicks: string) {
     this.rotation = rotation.toUpperCase();
-    this.count = parseInt(count);
+    this.clicks = parseInt(clicks);
   }
 }
 
 export function parseInstructions(list: string): Instruction[] {
   return list.split(/[\n,]\s*/).map(entry => {
     const rotation = entry.split("")[0];
-    const count = entry.substring(1);
-    return new Instruction(rotation, count);
-  });
+    const clicks = entry.substring(1);
+    if (!rotation || !clicks) return;
+    return new Instruction(rotation, clicks);
+  }).filter(i => i !== null && i !== undefined);
 }

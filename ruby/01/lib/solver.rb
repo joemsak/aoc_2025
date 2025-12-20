@@ -1,20 +1,17 @@
-require "instruction_parser"
-require "dial"
+require_relative "./instruction_parser"
+require_relative "./dial"
 
 class Solver
-  attr_reader :input, :parser, :dial
-
-  def initialize(input)
-    @input = input
-    @parser = InstructionParser.new(@input)
+  def initialize(list)
+    @instructions = InstructionParser.new(list).instructions
     @dial = Dial.new
   end
 
   def solve
-    parser.instructions.each do |instruction|
-      dial.turn(*instruction)
+    @instructions.each do |instruction|
+      @dial.turn(instruction.rotation, instruction.clicks)
     end
 
-    dial.zero_passes + dial.zero_landings
+    @dial.zero_passes + @dial.zero_landings
   end
 end

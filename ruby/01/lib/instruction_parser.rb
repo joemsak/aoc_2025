@@ -1,27 +1,22 @@
-# frozen_string_literal: true
-
-require_relative "direction"
-
 class InstructionParser
-  include Direction
+  attr_reader :instructions
 
-  LIST_SPLIT_PATTERN = /[\n,]\s*/
-  COUNT_PATTERN = /\d+/
-
-  attr_reader :list, :instructions
+  Instruction = Struct.new(:rotation, :clicks)
 
   def initialize(list)
-    @list = list
-    @instructions = parse_instructions
+    @instructions = parse(list)
   end
 
   private
 
-  def parse_instructions
-    list.split(LIST_SPLIT_PATTERN).filter_map do |instruction|
-      dir = instruction[DIR_PATTERN, 1]
-      count = instruction[COUNT_PATTERN]
-      [dir, count] if dir && count
+  def parse(list)
+    list.split(/[\n,]\s*/).filter_map do |entry|
+      rotation = entry[/\A\s*(?:L|R)/i]
+      clicks = entry[/\d+\z/]
+
+      next unless rotation && clicks
+
+      Instruction.new(rotation.strip.upcase, clicks.to_i)
     end
   end
 end

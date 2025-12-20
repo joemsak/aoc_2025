@@ -47,6 +47,6 @@ RSpec.describe Dial do
 
     expect {
       dial.turn("f", 5)
-    }.to raise_error('unknown direction `f`, must be one of ["l", "r"]')
+    }.to raise_error('unknown direction `F`, must be one of ["L", "R"]')
   end
 end

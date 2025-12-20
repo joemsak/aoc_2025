@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
 class Dial
-  ACCEPTED_DIRS = %w[l r].freeze
+  DIR_LEFT = "L"
+  DIR_RIGHT = "R"
+  ACCEPTED_DIRS = [DIR_LEFT, DIR_RIGHT].freeze
+  DIR_PATTERN = Regexp.new("\\A\\s*(?:#{ACCEPTED_DIRS.join("|")})\\s*", Regexp::IGNORECASE).freeze
   LIMIT = 100
 
   attr_reader :pointing_at
@@ -11,29 +14,25 @@ class Dial
   end
 
   def turn(dir, count)
-    dir = String(dir).downcase
+    dir = String(dir).upcase
 
-    unless ACCEPTED_DIRS.include?(dir)
+    unless dir.match?(DIR_PATTERN)
       raise "unknown direction `#{dir}`, must be one of #{ACCEPTED_DIRS}"
     end
 
     count = Integer(count)
     count -= LIMIT until count < LIMIT
 
-    if dir == "l"
-      if (pointing_at - count).negative?
-        @pointing_at = @pointing_at - count + LIMIT
-      else
-        @pointing_at -= count
-      end
+    if dir == DIR_LEFT
+      @pointing_at -= count
+    else
+      @pointing_at += count
     end
 
-    if dir == "r"
-      if (pointing_at + count) >= LIMIT
-        @pointing_at = @pointing_at + count - LIMIT
-      else
-        @pointing_at += count
-      end
+    if pointing_at >= LIMIT
+      @pointing_at -= LIMIT
+    elsif pointing_at.negative?
+      @pointing_at += LIMIT
     end
   end
 end

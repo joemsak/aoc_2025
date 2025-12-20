@@ -3,8 +3,8 @@
 require_relative "dial"
 
 class InstructionParser
-  LIST_SPLIT_PATTERN = /(?:\n|,)\s?/
-  COUNT_PATTERN = /\d+\z/
+  LIST_SPLIT_PATTERN = /[\n,]\s*/
+  COUNT_PATTERN = /\d+/
 
   attr_reader :list, :instructions
 
@@ -17,13 +17,9 @@ class InstructionParser
 
   def parse_instructions
     list.split(LIST_SPLIT_PATTERN).filter_map do |instruction|
-      dir = instruction.scan(Dial::DIR_PATTERN).first
-      next unless dir
-
-      count = instruction.scan(COUNT_PATTERN).first
-      next unless count
-
-      [dir, count]
+      dir = instruction[Dial::DIR_PATTERN, 1]
+      count = instruction[COUNT_PATTERN]
+      [dir, count] if dir && count
     end
   end
 end

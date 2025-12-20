@@ -13,26 +13,33 @@ RSpec.describe Dial do
     dial = described_class.new
 
     dial.turn(:l, 5)
-    expect(dial.pointing_at).to eq(55)
+    expect(dial.pointing_at).to eq(45)
 
     dial.turn(:r, 10)
-    expect(dial.pointing_at).to eq(45)
+    expect(dial.pointing_at).to eq(55)
   end
 
   specify "turning the dial around 0/99" do
     dial = described_class.new
 
     dial.turn(:l, 55)
-    expect(dial.pointing_at).to eq(5)
+    expect(dial.pointing_at).to eq(95)
 
     dial.turn(:r, 5)
     expect(dial.pointing_at).to eq(0)
 
     dial.turn(:r, 10)
-    expect(dial.pointing_at).to eq(90)
+    expect(dial.pointing_at).to eq(10)
 
     dial.turn(:l, 10)
     expect(dial.pointing_at).to eq(0)
+  end
+
+  specify "crazy high number" do
+    dial = described_class.new
+
+    dial.turn(:l, 876)
+    expect(dial.pointing_at).to eq(74)
   end
 
   specify "turning the dial with invalid input" do

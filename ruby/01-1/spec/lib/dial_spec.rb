@@ -35,7 +35,7 @@ RSpec.describe Dial do
     expect(dial.position).to eq(0)
   end
 
-  specify "crazy high number" do
+  specify "edge case: high number" do
     dial = described_class.new
 
     dial.turn(:l, 876)

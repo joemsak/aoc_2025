@@ -3,7 +3,7 @@ export class Instruction {
 	public count: number;
 
   constructor(rotation: string, count: string) {
-    this.rotation = rotation.toUpper();
+    this.rotation = rotation.toUpperCase();
     this.count = parseInt(count);
   }
 }

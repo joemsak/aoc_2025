@@ -8,7 +8,7 @@ export default class Dial {
     const delta = (dir === "L") ? -limitedCount : limitedCount;
 
     // remainder -> modulo in JS:
-    //   - (n % d) + d) % d
+    //   - ((n % d) + d) % d
     const n = this.position + delta; // dividend
     const d = Dial.LIMIT;            // divisor
     const result = ((n % d) + d) % d

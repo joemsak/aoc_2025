@@ -18,5 +18,6 @@ describe('instructionParser', () => {
     result = parseInstructions("L32\nR23,R1, L2")
 
     expect(result).toEqual(expected)
+    expect(result[0].count).toBe(32)
   });
 });

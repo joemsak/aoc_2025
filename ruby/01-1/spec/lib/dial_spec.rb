@@ -28,11 +28,8 @@ RSpec.describe Dial do
     dial.turn(:r, 5)
     expect(dial.position).to eq(0)
 
-    dial.turn(:r, 10)
-    expect(dial.position).to eq(10)
-
-    dial.turn(:l, 10)
-    expect(dial.position).to eq(0)
+    dial.turn(:l, 1)
+    expect(dial.position).to eq(99)
   end
 
   specify "edge case: high number" do
